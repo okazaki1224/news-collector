@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ニュース収集アプリ</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <h1>ニュース収集アプリ</h1>
+      <p class="subtitle">キーワードに関連するニュースを複数サイトから自動収集</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="status-bar" id="statusBar">
+      <div class="status-item">
+        <span class="status-label">スケジューラ</span>
+        <span class="status-value" id="schedulerStatus">読み込み中...</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">次回収集</span>
+        <span class="status-value" id="nextRun">-</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">登録キーワード</span>
+        <span class="status-value" id="keywordCount">0</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">収集記事数</span>
+        <span class="status-value" id="articleCount">0</span>
+      </div>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>キーワード登録</h2>
+        <p class="hint">登録したキーワードは1時間ごとに自動で検索されます（Google News / Bing News / NHKニュース）</p>
+        <form id="keywordForm" class="keyword-form">
+          <input type="text" id="keywordInput" placeholder="例: 人工知能, 半導体, 気候変動" required maxlength="200">
+          <button type="submit" class="btn btn-primary">登録</button>
+        </form>
+        <div class="actions">
+          <button id="collectAllBtn" class="btn btn-secondary">今すぐ全キーワード収集</button>
+        </div>
+        <ul id="keywordList" class="keyword-list"></ul>
+      </section>
+
+      <section class="card">
+        <h2>即時検索</h2>
+        <p class="hint">キーワードを入力してすぐに記事を検索・保存します</p>
+        <form id="searchForm" class="keyword-form">
+          <input type="text" id="searchInput" placeholder="検索キーワード" required maxlength="200">
+          <button type="submit" class="btn btn-accent">検索して保存</button>
+        </form>
+      </section>
+    </div>
+
+    <section class="card articles-section">
+      <div class="articles-header">
+        <h2>収集した記事</h2>
+        <div class="filters">
+          <select id="filterKeyword">
+            <option value="">すべてのキーワード</option>
+          </select>
+          <select id="filterSource">
+            <option value="">すべてのソース</option>
+            <option value="Google News">Google News</option>
+            <option value="Bing News">Bing News</option>
+            <option value="NHKニュース">NHKニュース</option>
+          </select>
+          <button id="refreshArticlesBtn" class="btn btn-ghost">更新</button>
+        </div>
+      </div>
+      <div id="articlesList" class="articles-list">
+        <p class="empty">記事がありません。キーワードを登録して収集を開始してください。</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>収集ログ</h2>
+      <div id="logsList" class="logs-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
